@@ -1,0 +1,26 @@
+from queries.virustotal import VirusTotal
+from queries.alienvault import AlienVault
+from queries.hybrid import Hybrid
+
+
+def main():
+    file_hash = "02e30c889212c695f1e0c69981ff47b4a985953887976956abd523b2e1478d67"
+
+    print("\n🔍 Checking with VirusTotal...")
+    vt_result = VirusTotal.virus_total_file_check(file_hash)
+    if vt_result:
+        print(vt_result)
+
+    print("\n🔍 Checking with AlienVault OTX...")
+    av_result = AlienVault.alienvault_subscribed_check()
+    if av_result:
+        print(av_result)
+
+    print("\n🔍 Checking with Hybrid Analysis...")
+    ha_result = Hybrid.hybrid_summary_report_check(file_hash)
+    if ha_result:
+        print(ha_result)
+
+
+if __name__ == "__main__":
+    main()

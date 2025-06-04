@@ -29,7 +29,7 @@ class Triage:
 
     @staticmethod
     def triage_summary(id: str):
-        url = f"https://tria.ge/api/v0/samples/{id}/summary"
+        url = f"https://tria.ge/api/v0/samples/{id}/overview.json"
 
         headers = {
             'Authorization': f'Bearer {os.environ.get("TRIAGE_APIKEY")}'

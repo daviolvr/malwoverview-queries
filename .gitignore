@@ -10,3 +10,4 @@ new_virustotal_8.py
 teste.py
 .env
 .venv
+__pycache__

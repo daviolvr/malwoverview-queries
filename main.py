@@ -1,6 +1,7 @@
 from queries.virustotal import VirusTotal
 from queries.alienvault import AlienVault
 from queries.hybrid import Hybrid
+from queries.triage import Triage
 
 
 def main():
@@ -20,6 +21,15 @@ def main():
     ha_result = Hybrid.hybrid_summary_report_check(file_hash)
     if ha_result:
         print(ha_result)
+
+    print("\n🔍 Checking with Triage...")
+    sample_id = Triage.triage_search(file_hash)
+    if sample_id:
+        print(sample_id)
+
+    tr_result = Triage.triage_summary(sample_id)
+    if tr_result:
+        print(tr_result)
 
 
 if __name__ == "__main__":

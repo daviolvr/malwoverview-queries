@@ -42,3 +42,22 @@ class Triage:
         else:
             print(f"Triage Error {response.status_code}: {response.text}")
             return None
+        
+
+    @staticmethod
+    def triage_dynamic(id: str):
+        url = f"https://tria.ge/api/v0/samples/{id}/behavioral1/report_triage.json"
+
+        headers = {
+            'accept': 'application/json',
+            'Authorization': f'Bearer {os.environ.get("TRIAGE_APIKEY")}'
+        }
+
+        response = requests.get(url=url, headers=headers)
+
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"Triage Error {response.status_code}: {response.text}")
+            return None
+

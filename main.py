@@ -27,9 +27,15 @@ def main():
     if sample_id:
         print(sample_id)
 
-    tr_result = Triage.triage_summary(sample_id)
-    if tr_result:
-        print(tr_result)
+    print("\n TRIAGE SUMMARY REPORT")
+    ts_result = Triage.triage_summary(sample_id)
+    if ts_result:
+        print(ts_result)
+
+    print("\n TRIAGE DYNAMIC REPORT")
+    td_result = Triage.triage_dynamic(sample_id)
+    if td_result:
+        print(td_result)
 
 
 if __name__ == "__main__":

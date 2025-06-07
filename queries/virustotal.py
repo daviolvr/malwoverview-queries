@@ -22,5 +22,22 @@ class VirusTotal:
         else:
             print(f"VirusTotal Error {response.status_code}: {response.text}")
             return None
+    
+
+    @staticmethod
+    def virustotal_behavior_summary(file_id: str):
+        url = f"https://www.virustotal.com/api/v3/files/{file_id}/behaviour_summary"
+
+        headers = {
+            'x-apikey': os.environ.get("VIRUSTOTAL_APIKEY")
+        }
+
+        response = requests.get(url=url, headers=headers)
+
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"VirusTotal Error {response.status_code}: {response.text}")
+            return None
         
         

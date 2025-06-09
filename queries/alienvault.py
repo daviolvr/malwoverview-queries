@@ -13,7 +13,6 @@ class AlienVault:
     @staticmethod
     def alienvault_file_check(file_id: str):
         url = f"https://otx.alienvault.com/api/v1/indicators/file/{file_id}/analysis"
-        
 
         response = requests.get(url=url, headers=AlienVault.headers)
 

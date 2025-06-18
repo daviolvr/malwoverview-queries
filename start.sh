@@ -9,29 +9,39 @@ source .venv/bin/activate
 echo "Instalando dependências..."
 pip install -r requirements.txt
 
+# Verifica se o .env existe
 if [ ! -f .env ]; then
     echo "Criando arquivo .env..."
     touch .env
-    echo -e "VIRUSTOTAL_APIKEY=\nALIENVAULT_APIKEY=\nHYBRID_APIKEY=\nTRIAGE_APIKEY=" > .env
+    echo "VIRUSTOTAL_APIKEY=" >> .env
+    echo "ALIENVAULT_APIKEY=" >> .env
+    echo "HYBRID_APIKEY=" >> .env
+    echo "TRIAGE_APIKEY=" >> .env
+    echo "MONGO_INITDB_ROOT_USERNAME=" >> .env
+    echo "MONGO_INITDB_ROOT_PASSWORD=" >> .env
+    echo "MONGO_INITDB_DATABASE=" >> .env
+    echo "MONGO_HOST=" >> .env
+    echo "MONGO_PORT=27017" >> .env
+    echo "Arquivo .env criado. Preencha as variáveis antes de continuar."
+    exit 1
 else
     echo "Arquivo .env já existe. Pulando criação"
 fi
 
 echo "Subindo containers com Docker Compose..."
-docker-compose up -d
+docker compose up -d
 
 echo "Rodando o servidor Django..."
-cd api/
+cd api
 python3 manage.py runserver &
-
-# Aguarda o Django estar disponível na porta 8000
-echo "Aguardando Django iniciar..."
-until curl -s http://localhost:8000/ > /dev/null; do
-  echo "Esperando servidor responder em http://localhost:8000..."
-  sleep 2
-done
-
+SERVER_PID=$!
 cd ..
+
+sleep 2  # Tempo para o servidor iniciar
 
 echo "Executando o client..."
 python3 client.py
+
+# Encerrando o servidor após o client rodar (opcional)
+echo "Parando o servidor Django..."
+kill $SERVER_PID
